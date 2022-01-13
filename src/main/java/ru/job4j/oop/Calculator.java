@@ -28,10 +28,8 @@ public class Calculator {
         int result2 = Calculator.minus(11);
         Calculator calculator = new Calculator();
         int rsl = calculator.divide(15);
-        Calculator calculator1 = new Calculator();
-        int rsl2 = calculator1.sumAllOperation(2);
-        Calculator calculator2 = new Calculator();
-        int rsl3 = calculator2.multiply(7);
+        int rsl2 = calculator.sumAllOperation(2);
+        int rsl3 = calculator.multiply(7);
         System.out.println(rsl3);
         System.out.println(rsl2);
         System.out.println(rsl);
