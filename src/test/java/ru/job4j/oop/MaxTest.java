@@ -36,4 +36,27 @@ public class MaxTest {
 
         assertEquals(result, expected);
     }
+
+    @Test
+    public void maxThree() {
+        int left = 4;
+        int right = 4;
+        int third = 5;
+        int result = Max.max(left, right, third);
+        int expected = 5;
+
+        assertEquals(result, expected);
+    }
+
+    @Test
+    public void maxFour() {
+        int left = 4;
+        int right = 4;
+        int third = 6;
+        int fourth = 10;
+        int result = Max.max(left, right, third, fourth);
+        int expected = 10;
+
+        assertEquals(result, expected);
+    }
 }
