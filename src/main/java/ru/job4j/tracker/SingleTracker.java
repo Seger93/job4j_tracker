@@ -1,5 +1,7 @@
 package ru.job4j.tracker;
 
+import java.util.List;
+
 public class SingleTracker {
     private Tracker tracker = new Tracker();
     private static SingleTracker instance = null;
@@ -26,11 +28,11 @@ public class SingleTracker {
         return tracker.replace(id, item);
     }
 
-    public Item[] findAll() {
+    public List<Item> findAll() {
         return tracker.findAll();
     }
 
-    public Item[] findByName(String key) {
+    public List<Item> findByName(String key) {
     return tracker.findByName(key);
     }
 
