@@ -1,10 +1,6 @@
 package ru.job4j.collection;
 
-import com.sun.source.tree.IfTree;
-
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
 
 public class StringCompare implements Comparator<String> {
 
