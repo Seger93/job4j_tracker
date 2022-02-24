@@ -7,10 +7,8 @@ public class DepDescComp implements Comparator<String> {
     public int compare(String first, String second) {
         String[] o1 = first.split("/");
         String[] o2 = second.split("/");
-        if (o2[0].compareTo(o1[0]) == 0) {
-            return  first.compareTo(second);
-        }
-        return o2[0].compareTo(o1[0]);
+        int res = o2[0].compareTo(o1[0]);
+        return res != 0 ? res : first.compareTo(second);
     }
 }
 
