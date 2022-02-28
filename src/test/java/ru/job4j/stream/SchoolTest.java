@@ -38,7 +38,8 @@ public class SchoolTest {
                 new Student(80, "Surname8")
         );
         School sc = new School();
-        Predicate<Student> pr = scope -> scope.getScore() >= 50 && scope.getScore() < 70;
+        Predicate<Student> pr = scope -> scope.getScore() >= 50
+                && scope.getScore() < 70;
         List<Student> rsl = sc.collect(students, pr);
         List<Student> expected = new ArrayList<>();
         expected.add(new Student(50, "Surname5"));
