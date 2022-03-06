@@ -1,9 +1,6 @@
 package ru.job4j.bank;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -70,16 +67,15 @@ public class BankService {
      * Если нет юзера или аккаунта, то вернет null.
      */
 
-    public Account findByRequisite(String passport, String requisite) {
+    public Optional<Account> findByRequisite(String passport, String requisite) {
         User user = findByPassport(passport);
         if (user != null) {
             return users.get(user)
                     .stream()
                     .filter(s -> s.getRequisite().equals(requisite))
-                    .findFirst()
-                    .orElse(null);
+                    .findFirst();
         }
-        return null;
+        return Optional.empty();
     }
 
     /**
@@ -96,13 +92,13 @@ public class BankService {
 
     public boolean transferMoney(String srcPassport, String srcRequisite,
                                  String destPassport, String destRequisite, double amount) {
-        Account accountGive = findByRequisite(srcPassport, srcRequisite);
-        Account accountGet = findByRequisite(destPassport, destRequisite);
-        if (accountGet != null && accountGive != null && accountGive.getBalance() >= amount) {
-            double balance1 = accountGive.getBalance();
-            double balance2 = accountGet.getBalance();
-            accountGet.setBalance(balance2 + amount);
-            accountGive.setBalance(balance1 - amount);
+        Optional<Account> accountGive = findByRequisite(srcPassport, srcRequisite);
+        Optional<Account> accountGet = findByRequisite(destPassport, destRequisite);
+        if (accountGet.isPresent() && accountGive.isPresent() && accountGive.get().getBalance() >= amount) {
+            double balance1 = accountGive.get().getBalance();
+            double balance2 = accountGet.get().getBalance();
+            accountGet.get().setBalance(balance2 + amount);
+            accountGive.get().setBalance(balance1 - amount);
             return true;
         }
         return false;
