@@ -10,7 +10,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class StartUITest {
     @Test
-    public void whenReplaceItemTestOutputIsSuccessfully()  {
+    public void whenReplaceItemTestOutputIsSuccessfully() throws Exception {
         Output out = new StubOutput();
         MemTracker memTracker = new MemTracker();
         Item one = memTracker.add(new Item("test1"));
@@ -38,7 +38,7 @@ public class StartUITest {
     }
 
     @Test
-    public void whenAllActionTestOutputIsSuccessfully() {
+    public void whenAllActionTestOutputIsSuccessfully() throws Exception {
         Output out = new StubOutput();
         MemTracker memTracker = new MemTracker();
         Item one = memTracker.add(new Item("test1"));
@@ -65,7 +65,7 @@ public class StartUITest {
     }
 
     @Test
-    public void whenNameActionTestOutputIsSuccessfully() {
+    public void whenNameActionTestOutputIsSuccessfully() throws Exception {
         Output out = new StubOutput();
         MemTracker memTracker = new MemTracker();
         Item one = memTracker.add(new Item("test1"));
@@ -92,7 +92,7 @@ public class StartUITest {
     }
 
     @Test
-    public void whenIdActionTestOutputIsSuccessfully() {
+    public void whenIdActionTestOutputIsSuccessfully() throws Exception {
         Output out = new StubOutput();
         MemTracker memTracker = new MemTracker();
         Item one = memTracker.add(new Item("test1"));
@@ -119,7 +119,7 @@ public class StartUITest {
     }
 
     @Test
-    public void whenCreateItem() {
+    public void whenCreateItem() throws Exception {
         Output output = new StubOutput();
         Input in = new StubInput(
                 new String[]{"0", "Item name", "1"}
@@ -134,7 +134,7 @@ public class StartUITest {
     }
 
     @Test
-    public void whenReplaceItem() {
+    public void whenReplaceItem() throws Exception {
         MemTracker memTracker = new MemTracker();
         Output output = new StubOutput();
         Item item = memTracker.add(new Item("Replaced item"));
@@ -151,7 +151,7 @@ public class StartUITest {
     }
 
     @Test
-    public void whenDeleteItem() {
+    public void whenDeleteItem() throws Exception {
         MemTracker memTracker = new MemTracker();
         Output output = new StubOutput();
         Item item = memTracker.add(new Item("Deleted item"));
@@ -167,7 +167,7 @@ public class StartUITest {
     }
 
     @Test
-    public void whenExit() {
+    public void whenExit() throws Exception {
         Output out = new StubOutput();
         Input in = new StubInput(
                 new String[]{"0"}
@@ -185,7 +185,7 @@ public class StartUITest {
     }
 
     @Test
-    public void whenInvalidExit() {
+    public void whenInvalidExit() throws Exception {
         Output out = new StubOutput();
         Input in = new StubInput(
                 new String[]{"7", "0"}

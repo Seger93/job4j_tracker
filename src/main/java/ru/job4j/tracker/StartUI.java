@@ -9,7 +9,7 @@ public class StartUI {
         this.out = out;
     }
 
-    public void init(Input input, SqlTracker sqlTracker, List<UserAction> actions) throws Exception {
+    public void init(Input input, Store sqlTracker, List<UserAction> actions) throws Exception {
         boolean run = true;
         while (run) {
             this.showMenu(actions);
