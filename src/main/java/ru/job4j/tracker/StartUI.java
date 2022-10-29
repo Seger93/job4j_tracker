@@ -9,7 +9,7 @@ public class StartUI {
         this.out = out;
     }
 
-    public void init(Input input, Tracker tracker, List<UserAction> actions) {
+    public void init(Input input, SqlTracker sqlTracker, List<UserAction> actions) throws Exception {
         boolean run = true;
         while (run) {
             this.showMenu(actions);
@@ -19,7 +19,7 @@ public class StartUI {
                 continue;
             }
             UserAction action = actions.get(select);
-            run = action.execute(input, tracker);
+            run = action.execute(input, sqlTracker);
         }
     }
 
@@ -33,11 +33,20 @@ public class StartUI {
     public static void main(String[] args) {
         Output output = new ConsoleOutput();
         Input input = new ValidateInput(output, new ConsoleInput());
-        Tracker tracker = new Tracker();
-        List<UserAction> actions = List.of(
-                new CreateAction(output), new NameAction(output), new IdAction(output), new DeleteAction(output),
-                new ReplaceAction(output), new ShowActions(output), new ExitAction(output)
-        );
-        new StartUI(output).init(input, tracker, actions);
+        try (SqlTracker sqlTracker = new SqlTracker()) {
+            sqlTracker.init();
+            List<UserAction> actions = List.of(
+                    new CreateAction(output),
+                    new NameAction(output),
+                    new IdAction(output),
+                    new DeleteAction(output),
+                    new ReplaceAction(output),
+                    new ShowActions(output),
+                    new ExitAction(output)
+            );
+            new StartUI(output).init(input, sqlTracker, actions);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
