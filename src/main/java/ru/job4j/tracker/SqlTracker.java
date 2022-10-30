@@ -10,6 +10,14 @@ public class SqlTracker implements Store, AutoCloseable {
 
     private Connection cn;
 
+    public SqlTracker() {
+        init();
+    }
+
+    public SqlTracker(Connection cn) {
+        this.cn = cn;
+    }
+
     public void init() {
         try (InputStream in = SqlTracker.class.getClassLoader().getResourceAsStream("tracker.properties")) {
             Properties config = new Properties();
@@ -33,7 +41,7 @@ public class SqlTracker implements Store, AutoCloseable {
     }
 
     @Override
-    public Item add(Item item) throws Exception {
+    public Item add(Item item) {
         try (PreparedStatement statement =
                      cn.prepareStatement("insert into items(name, created) values (?, ?)",
                              Statement.RETURN_GENERATED_KEYS)) {
@@ -85,10 +93,7 @@ public class SqlTracker implements Store, AutoCloseable {
         try (PreparedStatement statement = cn.prepareStatement("select * from items")) {
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
-                    items.add(new Item(
-                            resultSet.getInt("id"),
-                            resultSet.getString("name")
-                    ));
+                    items.add(resulted(resultSet));
                 }
             }
         } catch (Exception e) {
@@ -104,9 +109,7 @@ public class SqlTracker implements Store, AutoCloseable {
             statement.setString(1, key);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    items.add(new Item(resultSet.getInt("id"),
-                            resultSet.getString("name")
-                    ));
+                    items.add(resulted(resultSet));
                 }
             }
         } catch (Exception e) {
@@ -122,14 +125,21 @@ public class SqlTracker implements Store, AutoCloseable {
             statement.setInt(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    items = new Item(resultSet.getInt("id"),
-                            resultSet.getString("name"));
+                   items = resulted(resultSet);
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return items;
+    }
+
+    public Item resulted(ResultSet resultSet) throws Exception {
+        return new Item(
+                resultSet.getInt("id"),
+                resultSet.getString("name"),
+                resultSet.getTimestamp("created").toLocalDateTime()
+        );
     }
 }
 
