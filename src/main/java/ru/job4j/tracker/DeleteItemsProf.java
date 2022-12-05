@@ -1,5 +1,8 @@
 package ru.job4j.tracker;
 
+import java.util.Iterator;
+import java.util.List;
+
 public class DeleteItemsProf implements UserAction {
 
     private final Output out;
@@ -16,8 +19,9 @@ public class DeleteItemsProf implements UserAction {
     @Override
     public boolean execute(Input input, Store store) {
         out.println("=== Delete Items ====");
-        int id = input.askInt("Enter id: ");
-        while (store.delete(id)) {
+        List<Item> items = store.findAll();
+        for (Item item : items) {
+            store.delete(item.getId());
             out.println("Заявка удалена.");
         }
         return true;
