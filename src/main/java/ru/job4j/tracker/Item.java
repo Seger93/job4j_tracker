@@ -1,43 +1,28 @@
 package ru.job4j.tracker;
 
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.Objects;
 
-@Data
+@ToString
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 public class Item {
+
+    @Getter
+    @Setter
     private int id;
+
+    @NonNull
+    @EqualsAndHashCode.Include
+    @Getter
+    @Setter
     private String name;
+
+    @Getter
+    @Setter
     private LocalDateTime created = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES);
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MMMM-EEEE-yyyy HH:mm");
-
-    public Item() {
-    }
-
-    public Item(String name) {
-        this.name = name;
-    }
-
-    public Item(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public Item(int id, String name, LocalDateTime created) {
-        this.id = id;
-        this.name = name;
-        this.created = created;
-    }
-
-    @Override
-    public String toString() {
-        return "Item{"
-               + "id=" + id
-                + ", name='" + name + '\''
-                + ", created=" + created.format(FORMATTER)
-                + '}';
-    }
 }

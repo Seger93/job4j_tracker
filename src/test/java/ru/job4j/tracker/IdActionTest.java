@@ -3,7 +3,7 @@ package ru.job4j.tracker;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -12,8 +12,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class IdActionTest {
-
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MMMM-EEEE-yyyy HH:mm");
 
     @Test
     public void execute() {
@@ -27,7 +25,7 @@ public class IdActionTest {
         idAction.execute(input, tracker);
 
         String ln = System.lineSeparator();
-        assertThat(out.toString(), is("=== Find item by id ===" + ln + "Item{id=1, name='item', "
-                + "created=" + LocalDateTime.now().format(FORMATTER) + "}" + ln));
+        assertThat(out.toString(), is("=== Find item by id ===" + ln + "Item(id=1, name=item, "
+                + "created=" + LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES) + ")" + ln));
     }
 }
