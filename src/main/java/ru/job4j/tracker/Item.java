@@ -2,6 +2,7 @@ package ru.job4j.tracker;
 
 import lombok.*;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
@@ -10,11 +11,15 @@ import java.time.temporal.ChronoUnit;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
+@Table(name = "items")
 public class Item {
 
     @Getter
     @Setter
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @NonNull
     @EqualsAndHashCode.Include
