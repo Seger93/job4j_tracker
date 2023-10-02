@@ -1,10 +1,13 @@
 package ru.job4j.tracker;
 
 import lombok.*;
+import ru.job4j.toone.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.List;
 
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -13,21 +16,30 @@ import java.time.temporal.ChronoUnit;
 @NoArgsConstructor
 @Entity
 @Table(name = "items")
+@Getter
+@Setter
 public class Item {
 
-    @Getter
-    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NonNull
     @EqualsAndHashCode.Include
-    @Getter
-    @Setter
     private String name;
 
-    @Getter
-    @Setter
     private LocalDateTime created = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES);
+
+    @ManyToMany
+    @JoinTable(
+            name = "participates",
+            joinColumns = {@JoinColumn(name = "item_id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_id")}
+    )
+    private List<User> participates = new ArrayList<>();
+
+    public Item(Integer id, @NonNull String name, LocalDateTime created) {
+        this.id = id;
+        this.name = name;
+        this.created = created;
+    }
 }
