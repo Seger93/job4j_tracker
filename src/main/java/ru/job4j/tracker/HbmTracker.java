@@ -92,6 +92,7 @@ public class HbmTracker implements Store, AutoCloseable {
         Session session = this.sf.openSession();
         List<Item> result;
         try {
+            session.beginTransaction();
             result = session.createQuery("SELECT i from Item i", Item.class)
                     .list();
             session.getTransaction().commit();
@@ -113,6 +114,7 @@ public class HbmTracker implements Store, AutoCloseable {
         Session session = this.sf.openSession();
         List<Item> result;
         try {
+            session.beginTransaction();
             result = session.createQuery("from Item where name like :key", Item.class)
                     .setParameter("key", "%" + key + "%")
                     .list();
