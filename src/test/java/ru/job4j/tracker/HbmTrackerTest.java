@@ -1,7 +1,7 @@
 package ru.job4j.tracker;
 
-import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ public class HbmTrackerTest {
     @AfterEach
     public void clear() throws Exception {
         try (HbmTracker tracker = new HbmTracker()) {
-            tracker.findAll().forEach(item -> tracker.delete(item.getId()));
+                tracker.clearTable();
         }
     }
 
@@ -42,13 +42,35 @@ public class HbmTrackerTest {
     }
 
     @Test
+    public void whenFindById() throws Exception {
+        try (var tracker = new HbmTracker()) {
+            Item item = new Item();
+            item.setName("test4");
+            tracker.add(item);
+            Item result = tracker.findById(item.getId());
+            assertThat(result).isEqualTo(item);
+        }
+    }
+
+    @Test
+    public void whenFindByName() throws Exception {
+        try (var tracker = new HbmTracker()) {
+            Item item = new Item();
+            item.setName("test5");
+            tracker.add(item);
+            List<Item> result = tracker.findByName(item.getName());
+            assertThat(result).isEqualTo(List.of(item));
+        }
+    }
+
+    @Test
     public void whenDeleteItem() throws Exception {
         try (var tracker = new HbmTracker()) {
             Item item = new Item();
             tracker.add(item);
-            int result = item.getId();
-            boolean boolres = tracker.delete(item.getId());
-            assertThat(result).isNull();
+            boolean booLres = tracker.delete(item.getId());
+            assertThat(booLres).isTrue();
+            assertThat(tracker.findById(item.getId())).isNull();
         }
     }
 
@@ -63,5 +85,4 @@ public class HbmTrackerTest {
             assertThat(result).isEqualTo(List.of(item1, item2));
         }
     }
-
 }

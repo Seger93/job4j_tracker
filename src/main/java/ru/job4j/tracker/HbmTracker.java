@@ -152,4 +152,22 @@ public class HbmTracker implements Store, AutoCloseable {
         }
         return result;
     }
+
+    public void clearTable() {
+        Session session = this.sf.openSession();
+        try {
+            session.beginTransaction();
+            session.createQuery("delete from Item").executeUpdate();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            if (session != null && session.getTransaction().isActive()) {
+                session.getTransaction().rollback();
+            }
+            throw e;
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
 }
