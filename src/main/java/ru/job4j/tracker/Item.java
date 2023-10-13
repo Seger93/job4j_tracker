@@ -4,7 +4,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 @Entity
@@ -18,8 +17,7 @@ public class Item {
     @EqualsAndHashCode.Include
     private int id;
     private String name;
-    private LocalDateTime created = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MMMM-EEEE-yyyy HH:mm:ss");
+    private LocalDateTime created = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES);
 
     public Item() {
     }
